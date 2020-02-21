@@ -26,7 +26,7 @@ const StyledGrid = styled(Grid)({
   }
 });
 
-const LocationItem = ({name, address, city, state, zip, ...props}) => {
+const LocationListItem = ({name, address, city, state, zip, ...props}) => {
   return (
     <StyledGrid container direction='column' style={{textAlign: 'left'}} {...props}>
       <Grid item>
@@ -42,4 +42,4 @@ const LocationItem = ({name, address, city, state, zip, ...props}) => {
   );
 };
 
-export default LocationItem;
+export default LocationListItem;

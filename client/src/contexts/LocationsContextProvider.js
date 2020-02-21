@@ -13,7 +13,7 @@ export const actions = {
 };
 
 const reducer = (state, action) => {
-  switch (action.type) {
+  switch (action.action) {
     case actions.SET_LOCATIONS:
       return {...state, locations: action.payload};
 
@@ -21,7 +21,8 @@ const reducer = (state, action) => {
       return {...state, selectedLocation: action.payload};
 
     default:
-      throw new Error(`Unknown action: ${action.type}`);
+      console.warn('Unknown action: ', action);
+      return state;
   }
 };
 
@@ -32,7 +33,7 @@ const LocationsHydrator = () => {
 
   useEffect(() => {
     locationsDispatch({
-      type: actions.SET_LOCATIONS,
+      action: actions.SET_LOCATIONS,
       payload: locations,
     })
   }, []);

@@ -1,8 +1,7 @@
 import React from 'react';
-import {Grid, TextField, Typography, styled} from '@material-ui/core';
-import {LocationList, Map} from './components';
+import {Grid, Typography, styled} from '@material-ui/core';
+import {LocationList, LocationSearchInput, Map} from './components';
 import {LocationsContextProvider} from './contexts';
-import './App.css';
 
 const copy = {
   title: 'Find Popspots Advertising Locations',
@@ -15,7 +14,6 @@ const StyledGrid = styled(Grid)({
   width: '60%',
 });
 
-
 const App = () => (
   <LocationsContextProvider>
     <StyledGrid container direction='column' spacing={4}>
@@ -23,7 +21,7 @@ const App = () => (
         <Typography variant='h4'>{copy.title}</Typography>
       </Grid>
       <Grid item>
-        <TextField variant="outlined" label={copy.searchHint} fullWidth/>
+        <LocationSearchInput />
       </Grid>
       <Grid item container spacing={4}>
         <Grid item xs={4} style={{height: '500px', overflow: 'auto'}}>

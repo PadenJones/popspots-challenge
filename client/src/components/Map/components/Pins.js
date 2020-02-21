@@ -1,14 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useMemo} from 'react';
-import {Marker} from 'react-map-gl';
-import {PinIcon} from '.';
+import {Pin} from '.';
 
-const Pins = ({locations, onClick}) => useMemo(() => {
+const Pins = ({locations}) => useMemo(() => {
   return (
-    locations.map((location, index) => (
-      <Marker key={`marker-${index}`} longitude={location.lng} latitude={location.lat}>
-        <PinIcon onClick={() => onClick(location)}/>
-      </Marker>
+    locations.map((location) => (
+      <Pin key={location.name} location={location}/>
     ))
   )
 }, [locations]);

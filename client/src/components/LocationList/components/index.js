@@ -1,3 +1,1 @@
-import LocationItem from './LocationItem';
-
-export default LocationItem;
+export { default as LocationListItem } from './LocationListItem';

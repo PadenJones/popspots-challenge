@@ -22,20 +22,18 @@ const Map = () => {
 
   const setLocation = (location) => {
     locationsDispatch({
-      type: LocationsActions.SET_SELECTED_LOCATION,
+      action: LocationsActions.SET_SELECTED_LOCATION,
       payload: location,
     })
   };
 
   useEffect(() => {
-    console.log(selectedLocation);
-
     if (selectedLocation) {
       setViewport({
         ...viewport,
         latitude: selectedLocation.lat,
         longitude: selectedLocation.lng,
-        zoom: 17,
+        zoom: selectedLocation.zoom || 17,
       });
     }
   }, [selectedLocation]);
