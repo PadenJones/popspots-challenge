@@ -1,9 +1,11 @@
-Todo
-* 4 hours refresh
-* sanitize data
+#### Backend Todo
 * add DB
-* clean up location search
-* dropdown is flaky
-* move API keys into keystore
-* display popover on listitem click
+* create a job that sanitizes and loads data
+* refactor request parameters
+* figure out keystore
 * nodemon flakes out
+
+#### Frontend Todo
+* implicitly set zoom
+* location search is flaky
+* display map popup on list item click

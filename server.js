@@ -6,9 +6,6 @@ const geo = require('./geo');
 
 let NO_DB_LOCATIONS = [];
 
-// TODO: 4 hours refresh
-// TODO: sanitize data
-// TODO: parseFloat where necessary
 request('https://dashboard.getpopspots.com/public-data/challenge', function (error, response, body) {
   if (!error && response.statusCode === 200) {
     NO_DB_LOCATIONS = JSON.parse(body)
@@ -33,7 +30,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.get('/api/locations', (req, res) => {
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
-  res.send(geo.getClosest({lat, lng}, NO_DB_LOCATIONS));
+
+  const locations = (lat && lng)
+    ? geo.getClosest({lat, lng}, NO_DB_LOCATIONS)
+    : NO_DB_LOCATIONS;
+
+  res.send(locations);
 });
 
 if (process.env.NODE_ENV === 'production') {

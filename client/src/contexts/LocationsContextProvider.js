@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useReducer} from 'react';
-import locations from './locations';
 
 export const LocationsContext = React.createContext(null);
 
@@ -28,27 +27,18 @@ const reducer = (state, action) => {
   }
 };
 
-const LocationsHydrator = () => {
-  const [, locationsDispatch] = useContext(LocationsContext);
-
-  useEffect(() => {
-    locationsDispatch({
-      action: actions.SET_LOCATIONS,
-      payload: locations,
-    });
-  }, []);
-
-  return null;
-};
-
 const LocationsSearch = () => {
   const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
 
   useEffect(() => {
-    if (selectedLocation) {
-      const {lat, lng} = selectedLocation;
+      let uri = '/api/locations';
 
-      fetch(`/api/locations?lat=${lat}&lng=${lng}`)
+      if (selectedLocation) {
+        const {lat, lng} = selectedLocation;
+        uri += `?lat=${lat}&lng=${lng}`;
+      }
+
+      fetch(uri)
         .then(response => response.json())
         .then(results => {
           locationsDispatch({
@@ -56,7 +46,6 @@ const LocationsSearch = () => {
             payload: results.slice(0, 200),
           })
         });
-    }
   }, [selectedLocation]);
 
   return null;
@@ -64,7 +53,6 @@ const LocationsSearch = () => {
 
 const LocationsContextProvider = ({children}) => (
   <LocationsContext.Provider value={useReducer(reducer, initialState)}>
-    <LocationsHydrator/>
     <LocationsSearch/>
     {children}
   </LocationsContext.Provider>
