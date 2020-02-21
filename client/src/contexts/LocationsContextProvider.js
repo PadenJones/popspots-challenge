@@ -2,6 +2,8 @@
 import React, {useContext, useEffect, useReducer} from 'react';
 import locations from './locations';
 
+export const LocationsContext = React.createContext(null);
+
 const initialState = {
   locations: [],
   selectedLocation: undefined,
@@ -26,8 +28,6 @@ const reducer = (state, action) => {
   }
 };
 
-export const LocationsContext = React.createContext(null);
-
 const LocationsHydrator = () => {
   const [, locationsDispatch] = useContext(LocationsContext);
 
@@ -35,8 +35,29 @@ const LocationsHydrator = () => {
     locationsDispatch({
       action: actions.SET_LOCATIONS,
       payload: locations,
-    })
+    });
   }, []);
+
+  return null;
+};
+
+const LocationsSearch = () => {
+  const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
+
+  useEffect(() => {
+    if (selectedLocation) {
+      const {lat, lng} = selectedLocation;
+
+      fetch(`/api/locations?lat=${lat}&lng=${lng}`)
+        .then(response => response.json())
+        .then(results => {
+          locationsDispatch({
+            action: actions.SET_LOCATIONS,
+            payload: results.slice(0, 200),
+          })
+        });
+    }
+  }, [selectedLocation]);
 
   return null;
 };
@@ -44,6 +65,7 @@ const LocationsHydrator = () => {
 const LocationsContextProvider = ({children}) => (
   <LocationsContext.Provider value={useReducer(reducer, initialState)}>
     <LocationsHydrator/>
+    <LocationsSearch/>
     {children}
   </LocationsContext.Provider>
 );

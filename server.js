@@ -1,23 +1,37 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const request = require('request');
+const geo = require('./geo');
+
+let NO_DB_LOCATIONS = [];
+
+// TODO: refresh & figure out why I need to parseFloat
+request('https://dashboard.getpopspots.com/public-data/challenge', function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    NO_DB_LOCATIONS = JSON.parse(body)
+      .filter(location => {
+        const {name, city, state, address, zip, lat, lng} = location;
+        return name && city && state && address && zip && lat && lng;
+      })
+      .map(location => ({
+        ...location,
+        lat: parseFloat(location.lat),
+        lng: parseFloat(location.lng),
+      }));
+  }
+});
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
-// API calls
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
+app.get('/api/locations', (req, res) => {
+  const lat = parseFloat(req.query.lat);
+  const lng = parseFloat(req.query.lng);
+  res.send(geo.getClosest({lat, lng}, NO_DB_LOCATIONS));
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -25,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
+  app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }

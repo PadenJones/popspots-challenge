@@ -15,22 +15,20 @@ const Pin = ({location}) => {
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <>
-      <Marker longitude={location.lng} latitude={location.lat}>
-        <PinIcon onClick={handleClick}/>
-        <Popover
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-        >
-          <StyledLocationListItem {...location} />
-        </Popover>
-      </Marker>
-    </>
+    <Marker longitude={location.lng} latitude={location.lat}>
+      <PinIcon onClick={handleClick}/>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <StyledLocationListItem {...location} />
+      </Popover>
+    </Marker>
   );
 };
 

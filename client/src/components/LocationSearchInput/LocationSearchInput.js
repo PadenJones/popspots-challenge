@@ -13,7 +13,7 @@ const copy = {
 };
 
 const LocationSearchInput = () => {
-  const [locationsContext, locationsDispatch] = useContext(LocationsContext);
+  const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
   const [state, setState] = useState({address: ''});
 
   const handleChange = address => {
@@ -45,16 +45,20 @@ const LocationSearchInput = () => {
     >
       {({getInputProps, suggestions, getSuggestionItemProps}) => {
         return (
-          <Autocomplete
-            options={suggestions}
-            getOptionLabel={suggestion => suggestion.description}
-            renderInput={params => (
-              <TextField {...params} {...getInputProps()} variant="outlined" label={copy.searchHint} fullWidth/>
-            )}
-            renderOption={suggestion => (
-              <Typography variant='body1' {...getSuggestionItemProps(suggestion)}>{suggestion.description}</Typography>
-            )}
-          />
+          <>
+            <Autocomplete
+              options={suggestions}
+              getOptionLabel={suggestion => suggestion.description}
+              renderInput={params => (
+                <TextField {...params} {...getInputProps()} variant="outlined" label={copy.searchHint} fullWidth/>
+              )}
+              renderOption={suggestion => (
+                <Typography variant='body1' {...getSuggestionItemProps(suggestion)} style={{width: '100%'}}>
+                  {suggestion.description}
+                </Typography>
+              )}
+            />
+          </>
         );
       }}
     </PlacesAutocomplete>
