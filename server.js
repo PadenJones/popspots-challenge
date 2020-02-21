@@ -6,7 +6,9 @@ const geo = require('./geo');
 
 let NO_DB_LOCATIONS = [];
 
-// TODO: refresh & figure out why I need to parseFloat
+// TODO: 4 hours refresh
+// TODO: sanitize data
+// TODO: parseFloat where necessary
 request('https://dashboard.getpopspots.com/public-data/challenge', function (error, response, body) {
   if (!error && response.statusCode === 200) {
     NO_DB_LOCATIONS = JSON.parse(body)
