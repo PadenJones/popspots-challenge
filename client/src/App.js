@@ -1,77 +1,40 @@
-import React, { Component } from 'react';
-
-import logo from './logo.svg';
-
+import React from 'react';
+import {Grid, TextField, Typography, styled} from '@material-ui/core';
+import {LocationList, Map} from './components';
+import {LocationsContextProvider} from './contexts';
 import './App.css';
 
-class App extends Component {
-  state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-  };
+const copy = {
+  title: 'Find Popspots Advertising Locations',
+  searchHint: 'Search for a city, state, or postal code...',
+};
 
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
+const StyledGrid = styled(Grid)({
+  margin: '50px auto',
+  textAlign: 'center',
+  width: '60%',
+});
 
-  callApi = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
 
-    return body;
-  };
-
-  handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch('/api/world', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: this.state.post }),
-    });
-    const body = await response.text();
-
-    this.setState({ responseToPost: body });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        <p>{this.state.response}</p>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Server:</strong>
-          </p>
-          <input
-            type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <p>{this.state.responseToPost}</p>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <LocationsContextProvider>
+    <StyledGrid container direction='column' spacing={4}>
+      <Grid item>
+        <Typography variant='h4'>{copy.title}</Typography>
+      </Grid>
+      <Grid item>
+        <TextField variant="outlined" label={copy.searchHint} fullWidth/>
+      </Grid>
+      <Grid item container spacing={4}>
+        <Grid item xs={4} style={{height: '500px', overflow: 'auto'}}>
+          <LocationList/>
+        </Grid>
+        <Grid item xs={8} style={{paddingTop: 0, paddingBottom: 0}}>
+          <Map/>
+        </Grid>
+      </Grid>
+    </StyledGrid>
+  </LocationsContextProvider>
+);
 
 export default App;
