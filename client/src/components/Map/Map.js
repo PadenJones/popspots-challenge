@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import MapGL from 'react-map-gl';
-import {LocationsContext, LocationsActions, SecretsContext} from "../../contexts";
+import {LocationsContext, LocationsActions, TokensContext} from "../../contexts";
 import {Pins} from "./components";
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = () => {
-  const [{ MAPBOX_TOKEN }] = useContext(SecretsContext);
+  const [{ MAPBOX_TOKEN }] = useContext(TokensContext);
   const [{locations, selectedLocation}, locationsDispatch] = useContext(LocationsContext);
 
   const [viewport, setViewport] = useState({

@@ -5,6 +5,6 @@ export {
 } from './LocationsContextProvider';
 
 export {
-  default as SecretsContextProvider,
-  SecretsContext,
-} from './SecretsContextProvider';
+  default as TokensContextProvider,
+  TokensContext,
+} from './TokensContextProvider';

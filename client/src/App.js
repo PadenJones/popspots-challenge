@@ -1,11 +1,10 @@
 import React from 'react';
 import {Grid, Typography, styled} from '@material-ui/core';
 import {LocationList, LocationSearchInput, Map} from './components';
-import {LocationsContextProvider, SecretsContextProvider} from './contexts';
+import {LocationsContextProvider, TokensContextProvider} from './contexts';
 
 const copy = {
   title: 'Find Popspots Advertising Locations',
-  searchHint: 'Search for a city, state, or postal code...',
 };
 
 const StyledGrid = styled(Grid)({
@@ -15,7 +14,7 @@ const StyledGrid = styled(Grid)({
 });
 
 const App = () => (
-  <SecretsContextProvider>
+  <TokensContextProvider>
     <LocationsContextProvider>
       <StyledGrid container direction='column' spacing={4}>
         <Grid item>
@@ -34,7 +33,7 @@ const App = () => (
         </Grid>
       </StyledGrid>
     </LocationsContextProvider>
-  </SecretsContextProvider>
+  </TokensContextProvider>
 );
 
 export default App;

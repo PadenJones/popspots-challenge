@@ -31,7 +31,7 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script>
       (async function maps() {
-        const response = await fetch('/api/secrets');
+        const response = await fetch('/api/tokens');
         const { GOOGLE_MAPS_TOKEN } = await response.json();
         const url = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_TOKEN}&libraries=places`;
         let script = document.createElement('script');
