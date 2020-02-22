@@ -1,6 +1,6 @@
 import React from 'react';
-import Typography from "@material-ui/core/Typography";
-import {Grid, styled} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import { Grid, styled } from '@material-ui/core';
 
 /*
     "name": "City Produce Company, Inc - #1",
@@ -26,17 +26,17 @@ const StyledGrid = styled(Grid)({
   }
 });
 
-const LocationListItem = ({name, address, city, state, zip, ...props}) => {
+const LocationListItem = ({ name, address, city, state, zip, ...props }) => {
   return (
-    <StyledGrid container direction='column' style={{textAlign: 'left'}} {...props}>
+    <StyledGrid container direction="column" style={ { textAlign: 'left' } } { ...props }>
       <Grid item>
-        <Typography variant='body1' color='textPrimary'>{name}</Typography>
+        <Typography variant="body1" color="textPrimary">{name}</Typography>
       </Grid>
       <Grid item>
-        <Typography variant='body2' color='textSecondary'>{address}</Typography>
+        <Typography variant="body2" color="textSecondary">{address}</Typography>
       </Grid>
       <Grid item>
-        <Typography variant='body2' color='textSecondary'>{`${city}, ${state} ${zip}`}</Typography>
+        <Typography variant="body2" color="textSecondary">{`${ city }, ${ state } ${ zip }`}</Typography>
       </Grid>
     </StyledGrid>
   );

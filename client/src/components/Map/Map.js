@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MapGL from 'react-map-gl';
-import {LocationsContext, LocationsActions, TokensContext} from "../../contexts";
-import {Pins} from "./components";
+import { LocationsContext, LocationsActions, TokensContext } from '../../contexts';
+import { Pins } from './components';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = () => {
-  const [{ MAPBOX_TOKEN }] = useContext(TokensContext);
-  const [{locations, selectedLocation}, locationsDispatch] = useContext(LocationsContext);
+  const [ { MAPBOX_TOKEN } ] = useContext(TokensContext);
+  const [ { locations, selectedLocation }, locationsDispatch ] = useContext(LocationsContext);
 
-  const [viewport, setViewport] = useState({
+  const [ viewport, setViewport ] = useState({
     latitude: 37.785164,
     longitude: -100,
     zoom: 3,
@@ -34,18 +34,18 @@ const Map = () => {
         zoom: selectedLocation.zoom || 17,
       });
     }
-  }, [selectedLocation]);
+  }, [ selectedLocation ]);
 
   return (
     <MapGL
-      {...viewport}
-      onViewportChange={setViewport}
-      height='100%'
-      width='100%'
-      mapStyle='mapbox://styles/mapbox/streets-v11'
-      mapboxApiAccessToken={MAPBOX_TOKEN}
+      { ...viewport }
+      onViewportChange={ setViewport }
+      height="100%"
+      width="100%"
+      mapStyle="mapbox://styles/mapbox/streets-v11"
+      mapboxApiAccessToken={ MAPBOX_TOKEN }
     >
-      <Pins locations={locations} onClick={setLocation}/>
+      <Pins locations={ locations } onClick={ setLocation }/>
     </MapGL>
   );
 };

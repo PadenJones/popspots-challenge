@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useContext, useMemo} from 'react';
-import {List} from "@material-ui/core";
-import {LocationListItem} from ".";
+import React, { useContext, useMemo } from 'react';
+import { List } from '@material-ui/core';
+import { LocationListItem } from '.';
 
-import {LocationsContext, LocationsActions} from "../../contexts";
+import { LocationsContext, LocationsActions } from '../../contexts';
 
 const LocationList = () => {
-  const [{locations}, locationsDispatch] = useContext(LocationsContext);
+  const [ { locations }, locationsDispatch ] = useContext(LocationsContext);
 
   const memoizedLocationItems = useMemo(() => locations.map(location => (
-    <LocationListItem key={location.name} {...location} onClick={() => setSelectedLocation(location)}/>
-  )), [locations]);
+    <LocationListItem key={ location.name } { ...location } onClick={ () => setSelectedLocation(location) }/>
+  )), [ locations ]);
 
   const setSelectedLocation = (location) => {
     locationsDispatch({
@@ -20,7 +20,7 @@ const LocationList = () => {
   };
 
   return (
-    <List style={{overflowX: 'hidden'}}>
+    <List style={ { overflowX: 'hidden' } }>
       {memoizedLocationItems}
     </List>
   )

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useContext, useEffect, useReducer} from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 
 const RESOURCE_URL = '/api/locations';
 
@@ -18,10 +18,10 @@ export const actions = {
 const reducer = (state, action) => {
   switch (action.action) {
     case actions.SET_LOCATIONS:
-      return {...state, locations: action.payload};
+      return { ...state, locations: action.payload };
 
     case actions.SET_SELECTED_LOCATION:
-      return {...state, selectedLocation: action.payload};
+      return { ...state, selectedLocation: action.payload };
 
     default:
       console.warn('Unknown action: ', action);
@@ -30,14 +30,14 @@ const reducer = (state, action) => {
 };
 
 const LocationsSearch = () => {
-  const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
+  const [ { selectedLocation }, locationsDispatch ] = useContext(LocationsContext);
 
   useEffect(() => {
       let uri = RESOURCE_URL;
 
       if (selectedLocation) {
-        const {lat, lng} = selectedLocation;
-        uri += `?lat=${lat}&lng=${lng}`;
+        const { lat, lng } = selectedLocation;
+        uri += `?lat=${ lat }&lng=${ lng }`;
       }
 
       fetch(uri)
@@ -48,13 +48,13 @@ const LocationsSearch = () => {
             payload: results.slice(0, 200),
           })
         });
-  }, [selectedLocation]);
+  }, [ selectedLocation ]);
 
   return null;
 };
 
-const LocationsContextProvider = ({children}) => (
-  <LocationsContext.Provider value={useReducer(reducer, initialState)}>
+const LocationsContextProvider = ({ children }) => (
+  <LocationsContext.Provider value={ useReducer(reducer, initialState) }>
     <LocationsSearch/>
     {children}
   </LocationsContext.Provider>

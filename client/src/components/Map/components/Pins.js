@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useMemo} from 'react';
-import {Pin} from '.';
+import React, { useMemo } from 'react';
+import { Pin } from '.';
 
-const Pins = ({locations}) => useMemo(() => {
+const Pins = ({ locations }) => useMemo(() => {
   return (
     locations.map((location) => (
-      <Pin key={location.name} location={location}/>
+      <Pin key={ location.name } location={ location }/>
     ))
   )
-}, [locations]);
+}, [ locations ]);
 
 export default Pins;
