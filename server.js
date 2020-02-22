@@ -28,9 +28,9 @@ app.get('/api/locations', (req, res) => {
 });
 
 /**
- * Tokens that are needed on the frontend
+ * Non-secret API tokens for the frontend
  */
-app.get('/api/secrets', (req, res) => {
+app.get('/api/tokens', (req, res) => {
   res.send({
     MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
     GOOGLE_MAPS_TOKEN: process.env.GOOGLE_MAPS_TOKEN,
