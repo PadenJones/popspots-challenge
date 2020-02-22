@@ -12,3 +12,6 @@ were any bigger I'd separate things into subdirectories.
 
 I opted out of a database for the sake of dev speed, in a 
 professional setting I would definitely expect to have one.
+
+The map I used is slow, I'd be looking for a new one in a 
+professional setting.
