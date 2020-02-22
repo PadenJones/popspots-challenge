@@ -33,7 +33,7 @@ const LocationSearchInput = () => {
         },
       });
     } catch (e) {
-      alert(`Oops: ${ e.message() }`);
+      alert(`Oops: ${ e }`);
     }
   };
 
