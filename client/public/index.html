@@ -29,16 +29,13 @@
   <body>
     <script src=""></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script>
-      (async function maps() {
-        const response = await fetch('/api/tokens');
-        const { GOOGLE_MAPS_TOKEN } = await response.json();
-        const url = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_TOKEN}&libraries=places`;
-        let script = document.createElement('script');
-        script.setAttribute('src', url);
-        document.body.append(script);
-      })()
-    </script>
+    <!--
+      API key has restricted access: https://developers.google.com/maps/documentation/javascript/tutorial
+
+      In reality we should probably proxy this file through our backend to keep the secret hidden, but
+      this is just a quick project.
+    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1b32O8U42Q95jonZ04ULckpXRFSCsbPs&libraries=places"></script>
     <div id="root"></div>
     <!--
       This HTML file is a template.

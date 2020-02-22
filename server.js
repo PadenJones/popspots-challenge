@@ -29,11 +29,14 @@ app.get('/api/locations', (req, res) => {
 
 /**
  * Non-secret API tokens for the frontend
+ *
+ * These aren't secure; however, putting them here
+ * helps us avoid needing to redeploy if they're hardcoded.
+ * We could also store them in a database.
  */
 app.get('/api/tokens', (req, res) => {
   res.send({
     MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
-    GOOGLE_MAPS_TOKEN: process.env.GOOGLE_MAPS_TOKEN,
   })
 });
 
