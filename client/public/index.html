@@ -27,9 +27,18 @@
     <title>Popspots Challenge</title>
   </head>
   <body>
-    <!-- TODO: this needs to be moved to the backend -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0MKsli6YghAjzOVmJy_AaFEwhDTfCC1g&libraries=places"></script>
+    <script src=""></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      (async function maps() {
+        const response = await fetch('/api/secrets');
+        const { GOOGLE_MAPS_TOKEN } = await response.json();
+        const url = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_TOKEN}&libraries=places`;
+        let script = document.createElement('script');
+        script.setAttribute('src', url);
+        document.body.append(script);
+      })()
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.

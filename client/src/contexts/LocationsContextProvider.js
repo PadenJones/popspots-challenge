@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useReducer} from 'react';
 
+const RESOURCE_URL = '/api/locations';
+
 export const LocationsContext = React.createContext(null);
 
 const initialState = {
@@ -31,7 +33,7 @@ const LocationsSearch = () => {
   const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
 
   useEffect(() => {
-      let uri = '/api/locations';
+      let uri = RESOURCE_URL;
 
       if (selectedLocation) {
         const {lat, lng} = selectedLocation;

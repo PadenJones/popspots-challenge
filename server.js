@@ -1,51 +1,50 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const request = require('request');
-const geo = require('./geo');
+const geo = require('./helpers/geo');
+const locations = require('./models/locations');
 
-let NO_DB_LOCATIONS = [];
-
-request('https://dashboard.getpopspots.com/public-data/challenge', function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    NO_DB_LOCATIONS = JSON.parse(body)
-      .filter(location => {
-        const {name, city, state, address, zip, lat, lng} = location;
-        return name && city && state && address && zip && lat && lng;
-      })
-      .map(location => ({
-        ...location,
-        lat: parseFloat(location.lat),
-        lng: parseFloat(location.lng),
-      }));
-  }
-});
+const PORT = process.env.PORT || 5000;
 
 const app = express();
-const port = process.env.PORT || 5000;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+/**
+ * Keeping parameter validation light, in a real application
+ * we'd need to be a little more thorough
+ */
 app.get('/api/locations', (req, res) => {
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
 
-  const locations = (lat && lng)
-    ? geo.getClosest({lat, lng}, NO_DB_LOCATIONS)
-    : NO_DB_LOCATIONS;
+  const closest = (lat && lng)
+    ? geo.getClosest({lat, lng}, locations.all)
+    : locations.all;
 
-  res.send(locations);
+  res.send(closest);
 });
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
+/**
+ * Tokens that are needed on the frontend
+ */
+app.get('/api/secrets', (req, res) => {
+  res.send({
+    MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
+    GOOGLE_MAPS_TOKEN: process.env.GOOGLE_MAPS_TOKEN,
+  })
+});
 
-  // Handle React routing, return all requests to React app
+/**
+ * Serve static files in production so we can run as a single app
+ */
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));

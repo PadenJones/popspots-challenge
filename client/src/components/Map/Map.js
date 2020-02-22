@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import MapGL from 'react-map-gl';
-import {LocationsContext, LocationsActions} from "../../contexts";
+import {LocationsContext, LocationsActions, SecretsContext} from "../../contexts";
 import {Pins} from "./components";
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-// TODO: put this in a secrets store
-const TOKEN = 'pk.eyJ1IjoicGFkZW5qb25lcyIsImEiOiJjazZ3ODZheWowNHRwM21vYjE0NWdmaXBmIn0.U3MRMYOilqc0Pt0BEFi2pg';
-
 const Map = () => {
+  const [{ MAPBOX_TOKEN }] = useContext(SecretsContext);
   const [{locations, selectedLocation}, locationsDispatch] = useContext(LocationsContext);
 
   const [viewport, setViewport] = useState({
@@ -45,7 +43,7 @@ const Map = () => {
       height='100%'
       width='100%'
       mapStyle='mapbox://styles/mapbox/streets-v11'
-      mapboxApiAccessToken={TOKEN}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
     >
       <Pins locations={locations} onClick={setLocation}/>
     </MapGL>

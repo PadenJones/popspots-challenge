@@ -13,7 +13,7 @@ const copy = {
 };
 
 const LocationSearchInput = () => {
-  const [{selectedLocation}, locationsDispatch] = useContext(LocationsContext);
+  const [, locationsDispatch] = useContext(LocationsContext);
   const [state, setState] = useState({address: ''});
 
   const handleChange = address => {
