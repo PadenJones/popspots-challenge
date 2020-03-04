@@ -2,24 +2,20 @@ const request = require('request');
 const { isString, isFloat } = require('../helpers/validators');
 
 /**
- * Let's talk about this...
- *
  * In the real world we would have a DB and some way
  * to process background jobs
  *
- * So, we'd kick off a job that would request and sanatize
+ * We'd kick off a job that would request and sanatize
  * the data every 4 hours, then insert it into the db, which
  * we would query using some sort of ORM (most likely)..
  *
  * Jobs would be queued and ran asynchronously most likely
- * in a different application
- *
- * But that would take too long for this code challenge so
- * I'm just using setInterval and a shared reference to an array
- *
+ * in a separate application
  */
 
-const RESOURCE_URL = 'https://dashboard.getpopspots.com/public-data/challenge';
+const locations = require('../public/locations.json');
+
+// const RESOURCE_URL = 'https://dashboard.getpopspots.com/public-data/challenge';
 const REFRESH_RATE_HRS = 4;
 
 let noDBLocations = [];
@@ -69,19 +65,26 @@ const parse = (jsonLocations) => {
 };
 
 const refresh = () => {
-  request(RESOURCE_URL, function (error, response, body) {
-    if (error || response.statusCode !== 200) {
-      console.error(copy.badResponse);
-      return;
-    }
-    const parsed = parse(body);
-    const sanitized = sanitize(parsed);
+  // request(RESOURCE_URL, function (error, response, body) {
+  //   if (error || response.statusCode !== 200) {
+  //     console.error(copy.badResponse);
+  //     return;
+  //   }
+  //   const parsed = parse(body);
+  //   const sanitized = sanitize(parsed);
+  //
+  //   if (sanitized) {
+  //     noDBLocations.length = 0;
+  //     sanitized.forEach(location => noDBLocations.push(location));
+  //   }
+  // });
 
-    if (sanitized) {
-      noDBLocations.length = 0;
-      sanitized.forEach(location => noDBLocations.push(location));
-    }
-  });
+  const sanitized = sanitize(locations);
+
+  if (sanitized) {
+    noDBLocations.length = 0;
+    sanitized.forEach(location => noDBLocations.push(location));
+  }
 };
 
 setInterval(refresh, REFRESH_RATE_HRS * 60 * 60 * 1000);

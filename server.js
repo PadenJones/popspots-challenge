@@ -40,8 +40,10 @@ app.get('/api/tokens', (req, res) => {
   })
 });
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 /**
- * Serve static files in production so we can run as a single app
+ * Serve built application in production
  */
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
