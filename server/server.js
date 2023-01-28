@@ -6,7 +6,7 @@ const path = require('path');
 const geo = require('./helpers/geo');
 const locations = require('./models/locations');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(bodyParser.json());

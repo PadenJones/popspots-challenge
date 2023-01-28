@@ -6,5 +6,5 @@ RUN npm ci
 COPY . .
 RUN cd client && npm install && npm run build && cd ../
 RUN cd server && npm install && cd ../
-EXPOSE 5000
+EXPOSE 3001
 CMD node server/server.js
